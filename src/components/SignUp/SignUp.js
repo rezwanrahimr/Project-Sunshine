@@ -71,7 +71,7 @@ const SignUp = () => {
                             </button>
                         </div>
                         <p className="text-center mt-2">
-
+                            
                         </p>
                     </div>
                 </form>
