@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
      <Routes>
-       <Route path='/' element={<Home></Home>}></Route>
+       <Route path='/' element={<ProtractedRoute><Home></Home></ProtractedRoute>}></Route>
        <Route path='/home' element={<ProtractedRoute><Home></Home></ProtractedRoute>}></Route>
        <Route path='/login' element={<Login></Login>}></Route>
        <Route path='/signUp' element={<SignUp></SignUp>}></Route>

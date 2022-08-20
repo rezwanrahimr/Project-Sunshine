@@ -2,7 +2,10 @@ import React from 'react';
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 const SignUp = () => {
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    
     const navigate = useNavigate();
     const handleLogin = event => {
         event.preventDefault()
@@ -71,7 +74,7 @@ const SignUp = () => {
                             </button>
                         </div>
                         <p className="text-center mt-2">
-                            
+                            <button onClick={()=>signInWithGoogle()}>Google</button>
                         </p>
                     </div>
                 </form>

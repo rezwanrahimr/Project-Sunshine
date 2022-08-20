@@ -1,10 +1,31 @@
-import React from 'react';
+import { onAuthStateChanged,signOut } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import auth from '../../firebase.init';
 
 const Header = () => {
+  const [user,setUser] = useState({});
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+      console.log(user);
+      if(user){
+        setUser(user);
+      }
+      else{
+        setUser({});
+      }
+    },[])
+  })
+  // signOUT
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => { })
+      .catch((error) => { });
+  };
+
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -29,9 +50,14 @@ const Header = () => {
           </Nav>
           <Nav>
             <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link>
+            {
+              user?.uid ? (<Nav.Link eventKey={2} onClick={signOutUser} href="/login">
+                SIGN-OUT
+             </Nav.Link>) : (<Nav.Link eventKey={2} onClick={signOutUser} href="/login">
+                LOGIN
+             </Nav.Link>)
+            }
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
