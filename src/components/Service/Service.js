@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import service from './Service.css';
 
 const Service = () => {
     const [service,setService] = useState([]);
@@ -17,7 +18,7 @@ const Service = () => {
            
             {
                 service.map(services => 
-                    <Card className='p-3 m-3' style={{ width: '18rem' }}>
+                    <Card className='p-3 m-3 card' style={{ width: '18rem' }}>
       <Card.Img variant="top" src={services.image} />
       <Card.Body>
         <Card.Title>{services.titel}</Card.Title>
