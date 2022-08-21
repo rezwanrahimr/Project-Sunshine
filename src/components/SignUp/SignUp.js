@@ -3,10 +3,25 @@ import {  createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import Button from 'react-bootstrap/Button';
+import Loding from '../Loding/Loding';
 const SignUp = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    
     const navigate = useNavigate();
+
+    // Google sign-up
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    if(user){
+        navigate('/home');
+    }
+    if(loading){
+        return <Loding></Loding>
+    }
+    if(error){
+        alert(error.message);
+    }
+
+    
+    // Email and Password
     const handleLogin = event => {
         event.preventDefault()
         const email = event.target.email.value;
@@ -35,7 +50,7 @@ const SignUp = () => {
             <div className="Auth-form-container">
                 <form className="Auth-form" onSubmit={handleLogin}>
                     <div className="Auth-form-content">
-                        <h3 className="Auth-form-title">Sign In</h3>
+                        <h3 className="Auth-form-title">Registration</h3>
                         <div className="text-center">
                             Already registered?{" "}
                             <span className="link-primary">
@@ -74,7 +89,7 @@ const SignUp = () => {
                             </button>
                         </div>
                         <p className="text-center mt-2">
-                            <button onClick={()=>signInWithGoogle()}>Google</button>
+                            <Button variant="primary" onClick={()=>signInWithGoogle()}>Google</Button>{' '}
                         </p>
                     </div>
                 </form>

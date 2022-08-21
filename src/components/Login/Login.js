@@ -3,18 +3,23 @@ import LoginCss from './LoginCss.css';
 import {  signInWithEmailAndPassword } from "firebase/auth";
 import auth from '../../firebase.init';
 import { useNavigate } from 'react-router-dom';
-
-
-
-
-
-
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { Button } from 'react-bootstrap';
+import Loding from '../Loding/Loding';
 const Login = () => {
   const navigate = useNavigate();
 
-
   // Google Login
-
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  if(user){
+      navigate('/home');
+  }
+  if(loading){
+      return <Loding></Loding>
+  }
+  if(error){
+      alert(error.message);
+  }
   
   // Email and Passworld Login
   const handleLogin = event => {
@@ -40,7 +45,7 @@ signInWithEmailAndPassword(auth, email, password)
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={handleLogin}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign In</h3>
+            <h3 className="Auth-form-title">Login</h3>
             <div className="form-group mt-3">
               <label>Email address</label>
               <input
@@ -68,7 +73,7 @@ signInWithEmailAndPassword(auth, email, password)
               Go to Sign Up <a href="/signUP">Sign-Up</a>
             </p>
             <p className="forgot-password text-right mt-2">
-              <button >Google</button>
+            <Button variant="primary" onClick={()=>signInWithGoogle()}>Google</Button>{' '}
             </p>
           </div>
         </form>
