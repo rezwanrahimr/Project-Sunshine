@@ -11,6 +11,7 @@ const Header = () => {
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
       console.log(user);
+      console.log(user.displayName);
       if(user){
         setUser(user);
       }
@@ -30,26 +31,21 @@ const Header = () => {
         <div>
             <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
       <Container>
-        <Navbar.Brand href="#home" className='fw-bold'>ED-TECH</Navbar.Brand>
+        <Navbar.Brand href="/home" className='fw-bold'>ED-TECH</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Service</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link href="#service">Service</Nav.Link>
+            
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
+            {
+              user?.uid ?( <img src={user.photoURL} className='rounded-circle'  alt="" width="30px" /> ) : (<img src=""  alt="" width="30px" />)
+            }
+            {
+              user?.uid ? ( <Nav.Link>{user.displayName}</Nav.Link>) : (<Nav.Link>Not Found</Nav.Link>)
+            }
+           
             {
               user?.uid ? (<Nav.Link eventKey={2} onClick={signOutUser} href="/login">
                 SIGN-OUT
